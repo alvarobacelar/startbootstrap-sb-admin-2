@@ -1,14 +1,21 @@
-language:      node_js
-git:
-  depth:       3
-node_js:
-  - "node"
-install:       npm install
+language:
+  - python
+
+service:
+  - docker
+
+branches:
+  only:
+  - master
+
+install:       
+  - pip install ansible
+
+before_script:
+  - echo $PRIVATE_KEY > key.pem
+
 script:
-  - npm test
-  - gulp
-cache:
-  directories:
-    - node_modules
-notifications:
-  email:       false
+  - docker build -t alvarobacelar/app-admin .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push alvarobacelar/app-admin-test
+  - cd ansible && ansible-playbook -i inventories/prd deploy-app.yml --private-key key.pem -s

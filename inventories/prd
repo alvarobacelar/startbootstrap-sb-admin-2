@@ -1,0 +1,8 @@
+[docker]
+lab01-nyc1-05v ansible_host=104.248.238.142 ansible_user=root
+lab01-nyc1-02v ansible_host=104.248.225.45 ansible_user=root
+lab01-nyc1-01v ansible_host=104.248.238.109 ansible_user=root
+lab01-nyc1-03v ansible_host=104.248.225.57 ansible_user=root
+
+[nginx]
+lab01-nyc1-04v ansible_host=104.248.225.108 ansible_user=root
