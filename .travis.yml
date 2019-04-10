@@ -11,11 +11,9 @@ branches:
 install:       
   - pip install ansible
 
-before_script:
-  - echo $PRIVATE_KEY > key.pem
-
 script:
-  - docker build -t alvarobacelar/app-admin .
+  - docker build -t alvarobacelar/app-admin-test .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push alvarobacelar/app-admin-test
-  - cd ansible && ansible-playbook -i inventories/prd deploy-app.yml --private-key key.pem -s
+  - echo $PRIVATE_KEY > /tmp/key.pem && chmod 600 /tmp/key.pem
+  - cd ansible && ansible-playbook -i inventories/prd deploy-app.yml --private-key /tmp/key.pem -s
